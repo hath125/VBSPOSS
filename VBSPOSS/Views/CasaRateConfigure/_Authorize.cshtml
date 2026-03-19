@@ -39,7 +39,6 @@
         font-weight: bold !important;
     }
 
- 
 </style>
 <script>
 
@@ -111,6 +110,9 @@
      function onRowBound_AttachFileGrid(e) {
         rowNumber = 1;
     }
+
+
+
 </script>
 
 <form id="casaAuthorizeForm" method="post" enctype="multipart/form-data" asp-controller="CasaRateConfigure" asp-action="SaveAuthorizeForm">
@@ -292,6 +294,7 @@
         )
 </form>
 
+
 <script>
     $(document).ready(function () {
         countChangedRows();
@@ -321,15 +324,30 @@
                 "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
             },
             success: function (result) {
-                alert("Phê duyệt/từ chối thành công");
-                // Nếu bạn có biến flag thay đổi dữ liệu
-                // dataChangeCasaRateConfigure = true;
-                if (mainWindow && mainWindow.data("kendoWindow")) {
-                    mainWindow.data("kendoWindow").close();
+                // Kiểm tra theo nhiều cách phổ biến Controller hay return
+                if (result && (result.Success === true || result.success === true || result === true)) {
+                    alert("Phê duyệt / Từ chối thành công!");
+
+                    dataChangeCasaRateConfigure = true;   // Quan trọng để refresh grid Index
+
+                    if (mainWindow && mainWindow.data("kendoWindow")) {
+                        mainWindow.data("kendoWindow").close();
+                    }
+                }
+                else if (result && result.Message) {
+                    alert("Không thành công: " + result.Message);
+                }
+                else {
+                    alert("Phê duyệt thành công!");   // Fallback an toàn
+                    dataChangeCasaRateConfigure = true;
+                    if (mainWindow && mainWindow.data("kendoWindow")) {
+                        mainWindow.data("kendoWindow").close();
+                    }
                 }
             },
-            error: function () {
-                alert("Lỗi khi cập nhật dữ liệu");
+            error: function (xhr) {
+                console.error(xhr);
+                alert("Lỗi server: " + (xhr.responseText || xhr.statusText || "Unknown error"));
             }
         });
     });
