@@ -67,6 +67,9 @@ namespace VBSPOSS.Mappings
             CreateMap<StaffVbspInforViewModel, PosRepresentativeViewModel>();
             CreateMap<PosRepresentativeViewModel, StaffVbspInforViewModel>();
 
+            CreateMap<ListOfTransPoint, ListOfTransPointViewModel>();
+            CreateMap<ListOfTransPointViewModel, ListOfTransPoint>();
+
            
             CreateMap<AddCasaProductViewModel, InterestRateConfigMaster>()
                .ForMember(dest => dest.ModifiedDate, opt => opt.Ignore())

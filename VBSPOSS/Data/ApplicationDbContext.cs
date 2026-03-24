@@ -38,6 +38,7 @@ namespace VBSPOSS.Data
         public virtual DbSet<InterestRateTermDetail> InterestRateTermDetails { get; set; }
 
         public virtual DbSet<InterestRateConfigMasterView> InterestRateConfigMasterViews { get; set; }
+        public virtual DbSet<ListOfTransPoint> ListOfTransPoints { get; set; }
 
         // Thêm DbSet cho ListOfProducts
         public DbSet<ListOfProducts> ListOfProducts { get; set; }
@@ -97,6 +98,9 @@ namespace VBSPOSS.Data
 
             modelBuilder.Entity<InterestRateConfigMaster>().ToTable("InterestRateConfigMaster");
             modelBuilder.Entity<InterestRateConfigMaster>().HasKey(x => new { x.Id });
+
+            modelBuilder.Entity<ListOfTransPoint>().ToTable("ListOfTransPoint");
+            modelBuilder.Entity<ListOfTransPoint>().HasKey(x => new { x.ProvinceCode, x.PosCode, x.CommuneCode, x.TxnPointCode, x.EffectiveDate, x.TxnStatus });
             //add Index
             modelBuilder.Entity<InterestRateConfigMasterView>(eb =>
             {
